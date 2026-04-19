@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VOLTA — Pedales de Guitarra</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0c0c0c;
+    --off-white: #f5f2eb;
+    --cream: #ede9df;
+    --gold: #b8975a;
+    --gold-light: #d4b07a;
+    --mid: #7a7570;
+    --border: #2a2a2a;
+    --border-light: #e0dbd0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--black);
+    color: var(--off-white);
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.4rem 3rem;
+    background: rgba(12,12,12,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: 10px;
+    color: var(--off-white);
+    text-decoration: none;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+
+  .nav-cta {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--black) !important;
+    background: var(--gold);
+    padding: 10px 22px;
+    text-decoration: none;
+    transition: background 0.3s !important;
+  }
+
+  .nav-cta:hover { background: var(--gold-light) !important; color: var(--black) !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0 3rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 70% 50%, #1a1510 0%, transparent 70%),
+      linear-gradient(135deg, #0c0c0c 0%, #141210 50%, #0c0c0c 100%);
+  }
+
+  .hero-line-decor {
+    position: absolute;
+    top: 0; right: 0;
+    width: 1px;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, var(--gold) 40%, var(--gold) 60%, transparent);
+    opacity: 0.3;
+    right: 30%;
+  }
+
+  .hero-content { position: relative; z-index: 2; max-width: 700px; }
+
+  .hero-eyebrow {
+    font-size: 10px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(64px, 10vw, 110px);
+    font-weight: 300;
+    line-height: 0.9;
+    letter-spacing: -2px;
+    margin-bottom: 2rem;
+    color: var(--off-white);
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-desc {
+    font-size: 13px;
+    line-height: 2;
+    color: var(--mid);
+    max-width: 400px;
+    margin-bottom: 3rem;
+    font-weight: 300;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--black);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-2px); }
+
+  .btn-outline {
+    display: inline-block;
+    border: 1px solid var(--border);
+    color: var(--mid);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 14px 36px;
+    text-decoration: none;
+    font-weight: 400;
+    transition: border-color 0.3s, color 0.3s;
+  }
+
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 2rem;
+    right: 3rem;
+    font-size: 9px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--border);
+    writing-mode: vertical-rl;
+    z-index: 2;
+  }
+
+  /* DIVIDER */
+  .divider {
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* SECTION BASE */
+  section { padding: 6rem 3rem; }
+
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--off-white);
+    margin-bottom: 1.5rem;
+  }
+
+  /* ABOUT STRIP */
+  .about-strip {
+    background: var(--off-white);
+    color: var(--black);
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+  }
+
+  .about-cell {
+    padding: 3.5rem 2.5rem;
+    border-right: 1px solid var(--border-light);
+  }
+
+  .about-cell:last-child { border-right: none; }
+
+  .about-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 56px;
+    font-weight: 300;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .about-cell h3 {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 0.8rem;
+    color: var(--black);
+  }
+
+  .about-cell p {
+    font-size: 12px;
+    line-height: 1.9;
+    color: #555;
+    font-weight: 300;
+  }
+
+  /* PRODUCTS */
+  .products { background: #0f0e0c; }
+
+  .products-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3rem;
+  }
+
+  .filter-tabs {
+    display: flex;
+    gap: 0;
+    border: 1px solid var(--border);
+  }
+
+  .filter-tab {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 10px 20px;
+    background: none;
+    border: none;
+    color: var(--mid);
+    cursor: pointer;
+    border-right: 1px solid var(--border);
+    font-family: 'Montserrat', sans-serif;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .filter-tab:last-child { border-right: none; }
+  .filter-tab.active, .filter-tab:hover { background: var(--gold); color: var(--black); }
+
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+
+  .product-card {
+    background: #0f0e0c;
+    padding: 2rem;
+    transition: background 0.3s;
+    cursor: pointer;
+    display: none;
+  }
+
+  .product-card.visible { display: block; }
+  .product-card:hover { background: #151310; }
+
+  .product-tag {
+    display: inline-block;
+    font-size: 8px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid var(--border);
+    color: var(--mid);
+    margin-bottom: 1.5rem;
+  }
+
+  .product-tag.original { border-color: var(--gold); color: var(--gold); }
+
+  .product-visual {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1.5rem;
+  }
+
+  .product-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 400;
+    margin-bottom: 0.3rem;
+    color: var(--off-white);
+  }
+
+  .product-sub {
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--mid);
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
+  }
+
+  .product-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .product-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--gold);
+  }
+
+  .product-btn {
+    font-size: 8px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--mid);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2px;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  .product-btn:hover { color: var(--gold); border-color: var(--gold); }
+
+  /* CONTACT */
+  .contact {
+    background: var(--black);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding: 0;
+  }
+
+  .contact-left {
+    padding: 6rem 3rem;
+    border-right: 1px solid var(--border);
+  }
+
+  .contact-right {
+    padding: 6rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .contact-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .contact-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+  .contact-icon {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .contact-icon svg { width: 18px; height: 18px; }
+
+  .contact-item-label {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 0.4rem;
+  }
+
+  .contact-item-value {
+    font-size: 14px;
+    color: var(--off-white);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .contact-item-value:hover { color: var(--gold); }
+
+  .contact-desc {
+    font-size: 13px;
+    line-height: 2;
+    color: var(--mid);
+    margin-top: 1.5rem;
+    max-width: 380px;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #080808;
+    border-top: 1px solid var(--border);
+    padding: 2.5rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 8px;
+    color: var(--mid);
+  }
+
+  .footer-copy {
+    font-size: 10px;
+    color: var(--border);
+    letter-spacing: 2px;
+  }
+
+  /* PEDAL SVGs */
+  .pedal-body { fill: #1c1c1c; stroke: #3a3a3a; stroke-width: 1; }
+  .pedal-top { fill: #111; stroke: #2a2a2a; stroke-width: 0.5; }
+  .pedal-knob { fill: #0a0a0a; stroke: #444; stroke-width: 0.8; }
+  .pedal-knob-inner { fill: #141414; }
+  .pedal-indicator { fill: var(--gold); }
+  .pedal-text-main { font-family: 'Montserrat', sans-serif; font-weight: 600; letter-spacing: 2px; fill: var(--gold); }
+  .pedal-text-sub { font-family: 'Montserrat', sans-serif; fill: #444; letter-spacing: 1px; }
+  .pedal-led { fill: #e84a4a; }
+  .pedal-stomp { fill: #111; stroke: var(--gold); stroke-width: 1; }
+  .pedal-jack { fill: #2a2a2a; stroke: #444; stroke-width: 0.5; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">VOLTA</a>
+  <ul class="nav-links">
+    <li><a href="#productos">Productos</a></li>
+    <li><a href="#nosotros">Nosotros</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="https://wa.me/56975146392" class="nav-cta" target="_blank">WhatsApp</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-line-decor"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Pedales de guitarra · Santiago, Chile</p>
+    <h1 class="hero-title">
+      Define<br>
+      tu <em>tono.</em>
+    </h1>
+    <p class="hero-desc">
+      Pedales propios de alta relación calidad-precio y una selección de usados verificados. Diseñados para el músico que no transa en el sonido.
+    </p>
+    <div class="hero-actions">
+      <a href="#productos" class="btn-primary">Ver catálogo</a>
+      <a href="#contacto" class="btn-outline">Contáctanos</a>
+    </div>
+  </div>
+  <span class="hero-scroll">Scroll</span>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT STRIP -->
+<div class="about-strip">
+  <div class="about-cell">
+    <div class="about-num">01</div>
+    <h3>Volta Originals</h3>
+    <p>Pedales propios construidos con componentes de calidad. Precio accesible sin sacrificar el tono.</p>
+  </div>
+  <div class="about-cell">
+    <div class="about-num">02</div>
+    <h3>Usados Verificados</h3>
+    <p>Cada pedal de segunda mano es revisado y probado antes de publicarse. Stock rotativo y auténtico.</p>
+  </div>
+  <div class="about-cell">
+    <div class="about-num">03</div>
+    <h3>Atención Directa</h3>
+    <p>Habla directo con quien arma los pedales. Sin intermediarios, con conocimiento real del gear.</p>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- PRODUCTS -->
+<section class="products" id="productos">
+  <div class="products-header">
+    <div>
+      <p class="section-label">Catálogo</p>
+      <h2 class="section-title">Nuestros pedales</h2>
+    </div>
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterProducts('todos')">Todos</button>
+      <button class="filter-tab" onclick="filterProducts('original')">Volta Original</button>
+      <button class="filter-tab" onclick="filterProducts('usado')">Usados</button>
+    </div>
+  </div>
+
+  <div class="products-grid">
+
+    <!-- OVERDRIVE ORIGINAL -->
+    <div class="product-card visible" data-cat="original">
+      <span class="product-tag original">Volta Original</span>
+      <div class="product-visual">
+        <svg width="100" height="120" viewBox="0 0 100 120">
+          <rect x="10" y="8" width="80" height="104" rx="5" class="pedal-body"/>
+          <rect x="18" y="16" width="64" height="72" rx="3" class="pedal-top"/>
+          <text x="50" y="36" text-anchor="middle" font-size="8" class="pedal-text-main">OVERDRIVE</text>
+          <text x="50" y="46" text-anchor="middle" font-size="5" class="pedal-text-sub">VOLTA · V-01</text>
+          <circle cx="50" cy="68" r="18" class="pedal-knob"/>
+          <circle cx="50" cy="68" r="12" class="pedal-knob-inner"/>
+          <circle cx="50" cy="57" r="2.5" class="pedal-indicator"/>
+          <circle cx="27" cy="55" r="7" class="pedal-knob"/>
+          <circle cx="27" cy="55" r="4" class="pedal-knob-inner"/>
+          <text x="27" y="68" text-anchor="middle" font-size="4.5" class="pedal-text-sub">GAIN</text>
+          <circle cx="73" cy="55" r="7" class="pedal-knob"/>
+          <circle cx="73" cy="55" r="4" class="pedal-knob-inner"/>
+          <text x="73" y="68" text-anchor="middle" font-size="4.5" class="pedal-text-sub">TONE</text>
+          <circle cx="50" cy="97" r="13" class="pedal-stomp"/>
+          <circle cx="50" cy="97" r="8" class="pedal-knob-inner"/>
+          <circle cx="28" cy="24" r="3" class="pedal-led"/>
+          <rect x="10" y="102" width="14" height="8" rx="2" class="pedal-jack"/>
+          <rect x="76" y="102" width="14" height="8" rx="2" class="pedal-jack"/>
+        </svg>
+      </div>
+      <p class="product-name">Overdrive V-01</p>
+      <p class="product-sub">Volta Original · Nuevo</p>
+      <div class="product-footer">
+        <span class="product-price">$29.990</span>
+        <a href="https://wa.me/56975146392?text=Hola, me interesa el Overdrive V-01" class="product-btn" target="_blank">Consultar →</a>
+      </div>
+    </div>
+
+    <!-- DISTORTION ORIGINAL -->
+    <div class="product-card visible" data-cat="original">
+      <span class="product-tag original">Volta Original</span>
+      <div class="product-visual">
+        <svg width="100" height="120" viewBox="0 0 100 120">
+          <rect x="10" y="8" width="80" height="104" rx="5" class="pedal-body"/>
+          <rect x="18" y="16" width="64" height="72" rx="3" class="pedal-top"/>
+          <text x="50" y="36" text-anchor="middle" font-size="8" class="pedal-text-main">DISTORTION</text>
+          <text x="50" y="46" text-anchor="middle" font-size="5" class="pedal-text-sub">VOLTA · V-02</text>
+          <circle cx="50" cy="68" r="18" class="pedal-knob"/>
+          <circle cx="50" cy="68" r="12" class="pedal-knob-inner"/>
+          <circle cx="50" cy="57" r="2.5" class="pedal-indicator"/>
+          <circle cx="27" cy="55" r="7" class="pedal-knob"/>
+          <circle cx="27" cy="55" r="4" class="pedal-knob-inner"/>
+          <text x="27" y="68" text-anchor="middle" font-size="4.5" class="pedal-text-sub">DIST</text>
+          <circle cx="73" cy="55" r="7" class="pedal-knob"/>
+          <circle cx="73" cy="55" r="4" class="pedal-knob-inner"/>
+          <text x="73" y="68" text-anchor="middle" font-size="4.5" class="pedal-text-sub">LEVEL</text>
+          <circle cx="50" cy="97" r="13" class="pedal-stomp"/>
+          <circle cx="50" cy="97" r="8" class="pedal-knob-inner"/>
+          <circle cx="28" cy="24" r="3" class="pedal-led"/>
+          <rect x="10" y="102" width="14" height="8" rx="2" class="pedal-jack"/>
+          <rect x="76" y="102" width="14" height="8" rx="2" class="pedal-jack"/>
+        </svg>
+      </div>
+      <p class="product-name">Distortion V-02</p>
+      <p class="product-sub">Volta Original · Nuevo</p>
+      <div class="product-footer">
+        <span class="product-price">$29.990</span>
+        <a href="https://wa.me/56975146392?text=Hola, me interesa el Distortion V-02" class="product-btn" target="_blank">Consultar →</a>
+      </div>
+    </div>
+
+    <!-- DELAY ORIGINAL -->
+    <div class="product-card visible" data-cat="original">
+      <span class="product-tag original">Volta Original</span>
+      <div class="product-visual">
+        <svg width="100" height="120" viewBox="0 0 100 120">
+          <rect x="10" y="8" width="80" height="104" rx="5" class="pedal-body"/>
+          <rect x="18" y="16" width="64" height="72" rx="3" class="pedal-top"/>
+          <text x="50" y="36" text-anchor="middle" font-size="8" class="pedal-text-main">DELAY</text>
+          <text x="50" y="46" text-anchor="middle" font-size="5" class="pedal-text-sub">VOLTA · V-03</text>
+          <circle cx="50" cy="68" r="18" class="pedal-knob"/>
+          <circle cx="50" cy="68" r="12" class="pedal-knob-inner"/>
+          <circle cx="50" cy="57" r="2.5" class="pedal-indicator"/>
+          <circle cx="27" cy="55" r="7" class="pedal-knob"/>
+          <circle cx="27" cy="55" r="4" class="pedal-knob-inner"/>
+          <text x="27" y="68" text-anchor="middle" font-size="4.5" class="pedal-text-sub">TIME</text>
+          <circle cx="73" cy="55" r="7" class="pedal-knob"/>
+          <circle cx="73" cy="55" r="4" class="pedal-knob-inner"/>
+          <text x="73" y="68" text-anchor="middle" font-size="4.5" class="pedal-text-sub">MIX</text>
+          <circle cx="50" cy="97" r="13" class="pedal-stomp"/>
+          <circle cx="50" cy="97" r="8" class="pedal-knob-inner"/>
+          <circle cx="28" cy="24" r="3" class="pedal-led"/>
+          <rect x="10" y="102" width="14" height="8" rx="2" class="pedal-jack"/>
+          <rect x="76" y="102" width="14" height="8" rx="2" class="pedal-jack"/>
+        </svg>
+      </div>
+      <p class="product-name">Delay V-03</p>
+      <p class="product-sub">Volta Original · Nuevo</p>
+      <div class="product-footer">
+        <span class="product-price">$34.990</span>
+        <a href="https://wa.me/56975146392?text=Hola, me interesa el Delay V-03" class="product-btn" target="_blank">Consultar →</a>
+      </div>
+    </div>
+
+    <!-- BOSS DD-3 USADO -->
+    <div class="product-card visible" data-cat="usado">
+      <span class="product-tag">Segunda Mano</span>
+      <div class="product-visual">
+        <svg width="100" height="120" viewBox="0 0 100 120">
+          <rect x="10" y="8" width="80" height="104" rx="5" fill="#1a3a1a" stroke="#2a4a2a" stroke-width="1"/>
+          <rect x="18" y="16" width="64" height="72" rx="3" fill="#122212" stroke="#1a2a1a" stroke-width="0.5"/>
+          <text x="50" y="33" text-anchor="middle" font-size="7" font-family="'Montserrat',sans-serif" font-weight="600" fill="#4aaa4a" letter-spacing="2">DIGITAL</text>
+          <text x="50" y="43" text-anchor="middle" font-size="7" font-family="'Montserrat',sans-serif" font-weight="600" fill="#4aaa4a" letter-spacing="2">DELAY</text>
+          <text x="50" y="52" text-anchor="middle" font-size="5" font-family="'Montserrat',sans-serif" fill="#2a5a2a" letter-spacing="1">BOSS · DD-3</text>
+          <circle cx="50" cy="68" r="18" fill="#0a1a0a" stroke="#2a4a2a" stroke-width="0.8"/>
+          <circle cx="50" cy="68" r="12" fill="#0f1f0f"/>
+          <circle cx="50" cy="57" r="2.5" fill="#4aaa4a"/>
+          <circle cx="27" cy="55" r="7" fill="#0a1a0a" stroke="#2a4a2a" stroke-width="0.8"/>
+          <circle cx="27" cy="55" r="4" fill="#0f1f0f"/>
+          <text x="27" y="68" text-anchor="middle" font-size="4.5" font-family="'Montserrat',sans-serif" fill="#2a5a2a">TIME</text>
+          <circle cx="73" cy="55" r="7" fill="#0a1a0a" stroke="#2a4a2a" stroke-width="0.8"/>
+          <circle cx="73" cy="55" r="4" fill="#0f1f0f"/>
+          <text x="73" y="68" text-anchor="middle" font-size="4.5" font-family="'Montserrat',sans-serif" fill="#2a5a2a">F.BK</text>
+          <circle cx="50" cy="97" r="13" fill="#111" stroke="#4aaa4a" stroke-width="1"/>
+          <circle cx="50" cy="97" r="8" fill="#0a1a0a"/>
+          <circle cx="28" cy="24" r="3" fill="#e84a4a"/>
+          <rect x="10" y="102" width="14" height="8" rx="2" fill="#1a2a1a" stroke="#2a4a2a" stroke-width="0.5"/>
+          <rect x="76" y="102" width="14" height="8" rx="2" fill="#1a2a1a" stroke="#2a4a2a" stroke-width="0.5"/>
+        </svg>
+      </div>
+      <p class="product-name">Boss DD-3</p>
+      <p class="product-sub">Digital Delay · 1995 · Taiwan</p>
+      <div class="product-footer">
+        <span class="product-price">$95.000</span>
+        <a href="https://wa.me/56975146392?text=Hola, me interesa el Boss DD-3" class="product-btn" target="_blank">Consultar →</a>
+      </div>
+    </div>
+
+    <!-- IBANEZ USADO -->
+    <div class="product-card visible" data-cat="usado">
+      <span class="product-tag">Segunda Mano</span>
+      <div class="product-visual">
+        <svg width="100" height="120" viewBox="0 0 100 120">
+          <rect x="10" y="8" width="80" height="104" rx="5" fill="#1a1a30" stroke="#2a2a4a" stroke-width="1"/>
+          <rect x="18" y="16" width="64" height="72" rx="3" fill="#12121e" stroke="#1a1a2a" stroke-width="0.5"/>
+          <text x="50" y="36" text-anchor="middle" font-size="8" font-family="'Montserrat',sans-serif" font-weight="600" fill="#6a6ae0" letter-spacing="2">TUBE</text>
+          <text x="50" y="46" text-anchor="middle" font-size="5" font-family="'Montserrat',sans-serif" fill="#2a2a5a" letter-spacing="1">IBANEZ · TS9</text>
+          <circle cx="50" cy="68" r="18" fill="#0a0a1a" stroke="#2a2a4a" stroke-width="0.8"/>
+          <circle cx="50" cy="68" r="12" fill="#0f0f1f"/>
+          <circle cx="50" cy="57" r="2.5" fill="#6a6ae0"/>
+          <circle cx="27" cy="55" r="7" fill="#0a0a1a" stroke="#2a2a4a" stroke-width="0.8"/>
+          <circle cx="27" cy="55" r="4" fill="#0f0f1f"/>
+          <text x="27" y="68" text-anchor="middle" font-size="4.5" font-family="'Montserrat',sans-serif" fill="#2a2a5a">DRIVE</text>
+          <circle cx="73" cy="55" r="7" fill="#0a0a1a" stroke="#2a2a4a" stroke-width="0.8"/>
+          <circle cx="73" cy="55" r="4" fill="#0f0f1f"/>
+          <text x="73" y="68" text-anchor="middle" font-size="4.5" font-family="'Montserrat',sans-serif" fill="#2a2a5a">TONE</text>
+          <circle cx="50" cy="97" r="13" fill="#111" stroke="#6a6ae0" stroke-width="1"/>
+          <circle cx="50" cy="97" r="8" fill="#0a0a1a"/>
+          <circle cx="28" cy="24" r="3" fill="#e84a4a"/>
+          <rect x="10" y="102" width="14" height="8" rx="2" fill="#1a1a2a" stroke="#2a2a4a" stroke-width="0.5"/>
+          <rect x="76" y="102" width="14" height="8" rx="2" fill="#1a1a2a" stroke="#2a2a4a" stroke-width="0.5"/>
+        </svg>
+      </div>
+      <p class="product-name">Ibanez TS9</p>
+      <p class="product-sub">Tube Screamer · Usado</p>
+      <div class="product-footer">
+        <span class="product-price">$85.000</span>
+        <a href="https://wa.me/56975146392?text=Hola, me interesa el Ibanez TS9" class="product-btn" target="_blank">Consultar →</a>
+      </div>
+    </div>
+
+    <!-- MXR USADO -->
+    <div class="product-card visible" data-cat="usado">
+      <span class="product-tag">Segunda Mano</span>
+      <div class="product-visual">
+        <svg width="100" height="120" viewBox="0 0 100 120">
+          <rect x="10" y="8" width="80" height="104" rx="5" fill="#2a1a10" stroke="#4a3a2a" stroke-width="1"/>
+          <rect x="18" y="16" width="64" height="72" rx="3" fill="#1e1208" stroke="#2a1e10" stroke-width="0.5"/>
+          <text x="50" y="36" text-anchor="middle" font-size="8" font-family="'Montserrat',sans-serif" font-weight="600" fill="#e0a040" letter-spacing="2">PHASE 90</text>
+          <text x="50" y="46" text-anchor="middle" font-size="5" font-family="'Montserrat',sans-serif" fill="#5a4020" letter-spacing="1">MXR · M101</text>
+          <circle cx="50" cy="68" r="18" fill="#1a0e04" stroke="#4a3a2a" stroke-width="0.8"/>
+          <circle cx="50" cy="68" r="12" fill="#1f1308"/>
+          <circle cx="50" cy="57" r="2.5" fill="#e0a040"/>
+          <circle cx="35" cy="55" r="7" fill="#1a0e04" stroke="#4a3a2a" stroke-width="0.8"/>
+          <circle cx="35" cy="55" r="4" fill="#1f1308"/>
+          <text x="35" y="68" text-anchor="middle" font-size="4.5" font-family="'Montserrat',sans-serif" fill="#5a4020">SPEED</text>
+          <circle cx="65" cy="55" r="7" fill="#1a0e04" stroke="#4a3a2a" stroke-width="0.8"/>
+          <circle cx="65" cy="55" r="4" fill="#1f1308"/>
+          <text x="65" y="68" text-anchor="middle" font-size="4.5" font-family="'Montserrat',sans-serif" fill="#5a4020">INTNS</text>
+          <circle cx="50" cy="97" r="13" fill="#111" stroke="#e0a040" stroke-width="1"/>
+          <circle cx="50" cy="97" r="8" fill="#1a0e04"/>
+          <circle cx="28" cy="24" r="3" fill="#e84a4a"/>
+          <rect x="10" y="102" width="14" height="8" rx="2" fill="#2a1a10" stroke="#4a3a2a" stroke-width="0.5"/>
+          <rect x="76" y="102" width="14" height="8" rx="2" fill="#2a1a10" stroke="#4a3a2a" stroke-width="0.5"/>
+        </svg>
+      </div>
+      <p class="product-name">MXR Phase 90</p>
+      <p class="product-sub">Phaser · Usado</p>
+      <div class="product-footer">
+        <span class="product-price">$75.000</span>
+        <a href="https://wa.me/56975146392?text=Hola, me interesa el MXR Phase 90" class="product-btn" target="_blank">Consultar →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section class="contact" id="contacto">
+  <div class="contact-left">
+    <p class="section-label">Contacto</p>
+    <h2 class="section-title">Hablemos<br><em style="font-style:italic; color: var(--gold);">de tono.</em></h2>
+    <p class="contact-desc">
+      ¿Tienes dudas sobre algún pedal? ¿Quieres saber cuándo llega nuevo stock? Escríbenos directamente — respondemos rápido.
+    </p>
+  </div>
+  <div class="contact-right">
+    <div class="contact-item">
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5">
+          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 .01h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/>
+        </svg>
+      </div>
+      <div>
+        <p class="contact-item-label">WhatsApp</p>
+        <a href="https://wa.me/56975146392" class="contact-item-value" target="_blank">+56 9 7514 6392</a>
+      </div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5">
+          <rect x="2" y="3" width="20" height="14" rx="2"/>
+          <path d="M2 9l10 6 10-6"/>
+        </svg>
+      </div>
+      <div>
+        <p class="contact-item-label">Email</p>
+        <a href="mailto:volta.pedales@gmail.com" class="contact-item-value">volta.pedales@gmail.com</a>
+      </div>
+    </div>
+    <div class="contact-item">
+      <div class="contact-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.5">
+          <rect x="2" y="2" width="20" height="20" rx="5"/>
+          <circle cx="12" cy="12" r="4"/>
+          <circle cx="17.5" cy="6.5" r="1" fill="var(--gold)"/>
+        </svg>
+      </div>
+      <div>
+        <p class="contact-item-label">Instagram</p>
+        <a href="#" class="contact-item-value">@volta.pedales</a>
+        <p style="font-size:10px; color: var(--mid); margin-top: 4px;">Próximamente</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">VOLTA</span>
+  <p class="footer-copy">© 2026 · Santiago, Chile · Pedales de guitarra</p>
+</footer>
+
+<script>
+  function filterProducts(cat) {
+    document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    event.target.classList.add('active');
+    document.querySelectorAll('.product-card').forEach(card => {
+      if (cat === 'todos' || card.dataset.cat === cat) {
+        card.classList.add('visible');
+      } else {
+        card.classList.remove('visible');
+      }
+    });
+  }
+
+  // Smooth nav highlight on scroll
+  window.addEventListener('scroll', () => {
+    const nav = document.querySelector('nav');
+    nav.style.borderBottomColor = window.scrollY > 50 ? 'var(--gold)' : 'var(--border)';
+    nav.style.transition = 'border-color 0.4s';
+  });
+</script>
+</body>
+</html>
